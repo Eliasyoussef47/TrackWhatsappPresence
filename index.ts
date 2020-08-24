@@ -1,4 +1,4 @@
-import * as notifier from 'node-notifier';
+const notifier = require('node-notifier');
 import trackedUser from "./models/trackedUser";
 
 const wa = require('@open-wa/wa-automate');
@@ -9,10 +9,12 @@ let lastState = false;
 let isOnline = false;
 const trackedNumbers = process.env.TRACKED_USERS_NUMBERS.split(",").map((item) => item.trim());
 let pushbulletAccessToken = process.env.PUSHBULLET_ACCESS_TOKEN;
+let puppeteerExecutablePath = process.env.PUPPETEER_EXECUTABLEPATH;
 
 let Configs = {
     notification: stringToBool(process.env.NOTIFICATION),
-    pushbulletNotification: stringToBool(process.env.PUSHBULLET_NOTIFICATION)
+    pushbulletNotification: stringToBool(process.env.PUSHBULLET_NOTIFICATION),
+    puppeteerExecutablePath: puppeteerExecutablePath
 };
 
 if (argv.n !== undefined) {
@@ -21,6 +23,7 @@ if (argv.n !== undefined) {
 if (argv.p !== undefined) {
     Configs.pushbulletNotification = argv.p;
 }
+
 let pusher;
 if (Configs.pushbulletNotification) {
     const PushBullet = require('pushbullet');
@@ -32,8 +35,10 @@ console.log("Program configurations: ", Configs);
 let trackedUsers: trackedUser[] = [];
 
 const launchConfig = {
-    disableSpins: true
+    disableSpins: true,
+    executablePath: puppeteerExecutablePath
 };
+
 wa.create(launchConfig).then(async (client) => {
     // client.onMessage(message => {
     //     if (message.body === 'Hi') {

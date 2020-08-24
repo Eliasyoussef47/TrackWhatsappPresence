@@ -4,7 +4,7 @@ export default class trackedUser {
     constructor(phoneNumber: number, name: string) {
         phoneNumber = Number(phoneNumber); // Using Number() will remove leading zeros from phoneNumber
         this._phoneNumber = phoneNumber;
-        this.contactId = phoneNumber + '@c.us';
+        this._contactId = phoneNumber + '@c.us';
         this.__name = name;
     }
 

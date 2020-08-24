@@ -6,3 +6,4 @@ session.data.json
 /models/trackedUser.js.map
 /models/trackedUser.js
 /index.js
+/debug.log
