@@ -1,0 +1,8 @@
+.env
+open-wa.postman_collection.json
+session.data.json
+/node_modules/
+/index.js.map
+/models/trackedUser.js.map
+/models/trackedUser.js
+/index.js

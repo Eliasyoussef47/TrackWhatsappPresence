@@ -1,0 +1,27 @@
+{
+  "name": "trackwhatsapppresence",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@open-wa/wa-automate": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "minimist": "^1.2.5",
+    "node-notifier": "^8.0.0",
+    "pushbullet": "^2.4.0"
+  },
+  "exports": {
+    ".": [
+      {
+        "default": "./node.js"
+      },
+      "./node.js"
+    ]
+  }
+}
