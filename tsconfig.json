@@ -6,7 +6,6 @@
   "typeRoots": [
     "../node_modules/@types"
   ],
-  "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 12",
   "compilerOptions": {
     "module": "commonjs",
@@ -14,7 +13,8 @@
     "lib": [
       "es6"
     ],
-    "sourceMap": true
+    "sourceMap": true,
+    "moduleResolution": "node"
   },
   "exclude": [
     "node_modules"
