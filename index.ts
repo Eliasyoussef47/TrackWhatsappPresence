@@ -1,5 +1,5 @@
 const notifier = require('node-notifier');
-import trackedUser from "./models/trackedUser";
+import TrackedUser from "./models/TrackedUser";
 
 const wa = require('@open-wa/wa-automate');
 require('dotenv').config();
@@ -32,11 +32,10 @@ if (Configs.pushbulletNotification) {
 
 console.log("Program configurations: ", Configs);
 
-let trackedUsers: trackedUser[] = [];
+let trackedUsers: TrackedUser[] = [];
 
 const launchConfig = {
-    disableSpins: true,
-    executablePath: puppeteerExecutablePath
+    disableSpins: true
 };
 
 wa.create(launchConfig).then(async (client) => {
@@ -48,7 +47,7 @@ wa.create(launchConfig).then(async (client) => {
     let contact;
     for (let trackedNumber of trackedNumbers) {
         contact = await client.getContact(numberToContactId(Number(trackedNumber)));
-        trackedUsers.push(new trackedUser(Number(trackedNumber), contact.formattedName));
+        trackedUsers.push(new TrackedUser(Number(trackedNumber), contact.formattedName));
     }
     await track(client);
     setInterval(async () => {
@@ -57,7 +56,7 @@ wa.create(launchConfig).then(async (client) => {
 });
 
 async function track(client) {
-    trackedUsers = await trackedUser.checkOnline(client, trackedUsers);
+    trackedUsers = await TrackedUser.checkOnline(client, trackedUsers);
     for (let trackedUser of trackedUsers) {
         if (trackedUser.stateChange) {
             if (trackedUser.isOnline) {

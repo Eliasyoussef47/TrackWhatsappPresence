@@ -1,19 +1,27 @@
 {
+  "main": "index.js",
+  "types": [
+    "node"
+  ],
+  "typeRoots": [
+    "../node_modules/@types"
+  ],
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 12",
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "lib": [
+      "es6"
+    ],
+    "sourceMap": true
   },
   "exclude": [
     "node_modules"
   ],
   "files": [
     "index.ts",
-    "models/trackedUser.ts"
+    "models/TrackedUser.ts",
+    "models/PresenceLog.ts"
   ]
 }

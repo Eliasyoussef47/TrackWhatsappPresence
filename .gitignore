@@ -3,7 +3,7 @@ open-wa.postman_collection.json
 session.data.json
 /node_modules/
 /index.js.map
-/models/trackedUser.js.map
-/models/trackedUser.js
+/models/TrackedUser.js.map
+/models/TrackedUser.js
 /index.js
 /debug.log

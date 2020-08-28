@@ -1,6 +1,6 @@
 import {Client as waAutomateClient} from '@open-wa/wa-automate';
 
-export default class trackedUser {
+export default class TrackedUser {
     constructor(phoneNumber: number, name: string) {
         phoneNumber = Number(phoneNumber); // Using Number() will remove leading zeros from phoneNumber
         this._phoneNumber = phoneNumber;
@@ -76,7 +76,7 @@ export default class trackedUser {
     private __isOnline: boolean = false;
     private __stateChange: boolean = false;
 
-    public static async checkOnline(client: waAutomateClient, trackedUsers: trackedUser[]): Promise<trackedUser[]> {
+    public static async checkOnline(client: waAutomateClient, trackedUsers: TrackedUser[]): Promise<TrackedUser[]> {
         if (trackedUsers.length < 1) throw new Error("No tracked users");
         let isOnline;
         for (let trackedUSer of trackedUsers) {
