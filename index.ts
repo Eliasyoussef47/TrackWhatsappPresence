@@ -13,8 +13,7 @@ let puppeteerExecutablePath = process.env.PUPPETEER_EXECUTABLEPATH;
 
 let Configs = {
     notification: stringToBool(process.env.NOTIFICATION),
-    pushbulletNotification: stringToBool(process.env.PUSHBULLET_NOTIFICATION),
-    puppeteerExecutablePath: puppeteerExecutablePath
+    pushbulletNotification: stringToBool(process.env.PUSHBULLET_NOTIFICATION)
 };
 
 if (argv.n !== undefined) {
@@ -35,7 +34,8 @@ console.log("Program configurations: ", Configs);
 let trackedUsers: TrackedUser[] = [];
 
 const launchConfig = {
-    disableSpins: true
+    disableSpins: true,
+    executablePath: puppeteerExecutablePath ? puppeteerExecutablePath : null
 };
 
 wa.create(launchConfig).then(async (client) => {
