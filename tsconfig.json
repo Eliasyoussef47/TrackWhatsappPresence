@@ -14,14 +14,13 @@
       "es6"
     ],
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules"
   ],
   "files": [
-    "index.ts",
-    "models/TrackedUser.ts",
-    "models/PresenceLog.ts"
+    "index.ts"
   ]
 }

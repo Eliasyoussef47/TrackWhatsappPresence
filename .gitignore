@@ -7,3 +7,9 @@ session.data.json
 /models/TrackedUser.js
 /index.js
 /debug.log
+
+# managed
+**.data.json
+**.node-persist**
+**_IGNORE_**
+# end managed

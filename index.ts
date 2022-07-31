@@ -1,7 +1,7 @@
 const notifier = require('node-notifier');
 import TrackedUser from "./models/TrackedUser";
-
-const wa = require('@open-wa/wa-automate');
+import Utilz from "./Utilz";
+import * as wa from '@open-wa/wa-automate';
 require('dotenv').config();
 let argv = require('minimist')(process.argv.slice(2));
 
@@ -12,8 +12,9 @@ let pushbulletAccessToken = process.env.PUSHBULLET_ACCESS_TOKEN;
 let puppeteerExecutablePath = process.env.PUPPETEER_EXECUTABLEPATH;
 
 let Configs = {
-    notification: stringToBool(process.env.NOTIFICATION),
-    pushbulletNotification: stringToBool(process.env.PUSHBULLET_NOTIFICATION)
+    notification: Utilz.stringToBool(process.env.NOTIFICATION),
+    pushbulletNotification: Utilz.stringToBool(process.env.PUSHBULLET_NOTIFICATION),
+    multiDevice: Utilz.stringToBool(process.env.MULTI_DEVICE),
 };
 
 if (argv.n !== undefined) {
@@ -21,6 +22,9 @@ if (argv.n !== undefined) {
 }
 if (argv.p !== undefined) {
     Configs.pushbulletNotification = argv.p;
+}
+if (argv.mD !== undefined) {
+    Configs.multiDevice = argv.mD;
 }
 
 let pusher;
@@ -35,18 +39,19 @@ let trackedUsers: TrackedUser[] = [];
 
 const launchConfig = {
     disableSpins: true,
-    executablePath: puppeteerExecutablePath ? puppeteerExecutablePath : null
+    executablePath: puppeteerExecutablePath ? puppeteerExecutablePath : null,
+    multiDevice: Configs.multiDevice
 };
 
 wa.create(launchConfig).then(async (client) => {
-    // client.onMessage(message => {
-    //     if (message.body === 'Hi') {
-    //         client.sendText(message.from, '👋 Hello!');
-    //     }
-    // });
+    await client.onMessage(message => {
+        if (message.body === 'Hi') {
+            client.sendText(message.from, '👋 Hello!');
+        }
+    });
     let contact;
     for (let trackedNumber of trackedNumbers) {
-        contact = await client.getContact(numberToContactId(Number(trackedNumber)));
+        contact = await client.getContact(Utilz.numberToContactId(Number(trackedNumber)));
         trackedUsers.push(new TrackedUser(Number(trackedNumber), contact.formattedName));
     }
     await track(client);
@@ -79,19 +84,5 @@ async function track(client) {
                 if (Configs.pushbulletNotification) pusher.note('', 'TrackWhatsappPresence', `${trackedUser.name} is offline | ${new Date().toLocaleTimeString()}`);
             }
         }
-    }
-}
-
-function numberToContactId(phoneNumber: number) {
-    return phoneNumber + '@c.us';
-}
-
-function stringToBool(stringBool: string) {
-    if (stringBool.toLowerCase() === "true") {
-        return true;
-    } else if (stringBool.toLowerCase() === "false") {
-        return false;
-    } else {
-        return false;
     }
 }

@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@open-wa/wa-automate": "^2.0.0",
+    "@open-wa/wa-automate": "^4.35.6",
     "dotenv": "^8.2.0",
     "minimist": "^1.2.5",
     "node-notifier": "^8.0.0",

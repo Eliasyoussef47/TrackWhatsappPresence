@@ -1,10 +1,8 @@
-import {Client as waAutomateClient} from '@open-wa/wa-automate';
+import { Client as waAutomateClient, ContactId } from '@open-wa/wa-automate';
 
 export default class TrackedUser {
     constructor(phoneNumber: number, name: string) {
-        phoneNumber = Number(phoneNumber); // Using Number() will remove leading zeros from phoneNumber
         this._phoneNumber = phoneNumber;
-        this._contactId = phoneNumber + '@c.us';
         this.__name = name;
     }
 
@@ -53,12 +51,8 @@ export default class TrackedUser {
         this._lastState = value;
     }
 
-    get contactId(): string {
-        return this._contactId;
-    }
-
-    set contactId(value: string) {
-        this._contactId = value;
+    get contactId(): ContactId {
+        return <ContactId> `${ this._phoneNumber }@c.us`;
     }
 
     get phoneNumber(): number {
@@ -71,7 +65,6 @@ export default class TrackedUser {
 
     private __name: string;
     private _phoneNumber: number;
-    private _contactId: string;
     private _lastState: boolean = false;
     private __isOnline: boolean = false;
     private __stateChange: boolean = false;
@@ -86,10 +79,12 @@ export default class TrackedUser {
             if (isOnline === true) {
                 if (trackedUSer.lastState === false) {
                     trackedUSer.lastState = true;
+                    trackedUSer._stateChange = true;
                 }
             } else if (isOnline === false) {
                 if (trackedUSer.lastState === true) {
                     trackedUSer.lastState = false;
+                    trackedUSer._stateChange = true;
                 }
             }
         }
